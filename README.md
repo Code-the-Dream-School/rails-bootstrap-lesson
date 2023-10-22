@@ -23,13 +23,19 @@ Step 1: Install and configure Bootstrap
 1.  Run `bin/bundle add bootstrap`
 2.  Rename `app/assets/stylesheets/application.css` to `application.scss`.  Then add the line `@import "bootstrap"`
 3.  Edit `app/assets/javascript/application.cs` and add these lines:
-    import "popper"
-    import “bootstrap”
-4.  Edit `config/importmap.rb` and add these lines:
-    pin "popper", to: 'popper.js', preload: true
-    pin "bootstrap", to: 'bootstrap.min.js', preload: true
-5.  Add the following line to `config\initializers\assets.rb`:
-    Rails.application.config.assets.precompile += %w( bootstrap.min.js popper.js)
+```
+import "popper"
+import "bootstrap"
+```
+5.  Edit `config/importmap.rb` and add these lines:
+```
+pin "popper", to: 'popper.js', preload: true
+pin "bootstrap", to: 'bootstrap.min.js', preload: true
+```
+7.  Add the following line to `config\initializers\assets.rb`:
+```
+Rails.application.config.assets.precompile += %w( bootstrap.min.js popper.js)
+```
 
 Then run the server, or restart it if it is already running.  Verify that the appearance of the application has changed.  Note – the precompile step does cause your application to start slowly.  You should see something like this:
 
