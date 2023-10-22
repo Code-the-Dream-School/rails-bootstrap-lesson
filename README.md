@@ -12,7 +12,7 @@ The specifications for the lesson are below.  There are instructions for each p
 4.  Add an image to your configuration, and make it the background image for your banner.
 5.  Add a font to your configuration, and make it the font for your banner.
 6.  Add a navigation bar below the banner, with pulldowns for Customers and Orders.  The Customer pulldown should have the choices Customer List and New Customer.  Similarly, the Orders pulldown should have the choices Order List and New Orders.
-7.  Add Bootstrap classes to the links and buttons within the Customers index view, so that all appear as buttons.  Optionally, change all the other links and buttons within the application to have the same style.
+7.  Add Bootstrap classes to the links and buttons within the Customers index view, so that all appear as buttons.  Optionally, change all the other links and buttons within the application to have the same style.  Also, style the tables using a Bootstrap class.
 8.  Change the Orders index view.  Each Order should appear as a card within a grid.  The grid should be responsive, in that if the browser window is made too narrow, the cards should stack.  Each card should have as a title the product name and content that includes the customer name, the product count, and edit and delete buttons.  Each card should have a border, and there should be margins to each side and above the card, and of course the edit and delete buttons should work.
 9.  Add Bootstrap alert divs to the layout.  If these are shown, they should appear below the banner and above the navigation bar.  There should be a danger one for a flash alert (if it is present) and a success one for a flash notice (if it is present.)
 10.  Review the instructions on how to change the “are you sure” message for delete operations into a Bootstrap modal window. Optionally, complete those instructions.
@@ -23,9 +23,9 @@ The specifications for the lesson are below.  There are instructions for each p
 1.  Run: `bin/bundle add bootstrap`
 2.  Rename `app/assets/stylesheets/application.css` to `application.scss`.  Then add the line
 ```
-@import "bootstrap"
+@import "bootstrap";
 ```
-3.  Edit `app/assets/javascript/application.cs` and add these lines:
+3.  Edit `app/javascript/application.js` and add these lines:
 ```
 import "popper"
 import "bootstrap"
@@ -41,6 +41,7 @@ Rails.application.config.assets.precompile += %w( bootstrap.min.js popper.js)
 ```
 
 Then run the server, or restart it if it is already running.  Verify that the appearance of the application has changed.  Note – the precompile step does cause your application to start slowly.  You should see something like this:
+![Starting Bootstrap](./images/after-bootstrap.png)
 
 ## Step 2: Changing the Background Color
 
@@ -54,7 +55,8 @@ This value is for light purple, but you can choose any light color you like. Als
 
 ## Step 3: Adding the Banner
 
-The banner is done as is described at the W3schools Bootstrap Jumbotron link.  The jumbotron is no longer a Bootstrap class, but you can do the equivalent.  You can use the example from W3schools, but use your own title and text.  Refresh your browser page and verify that the banner is there.  At this point, you should have something like this.
+The banner is done as is described at the W3schools Bootstrap Jumbotron link.  The jumbotron is no longer a Bootstrap class, but you can do the equivalent.  You can use the example from W3schools, but use your own title and text.  Refresh your browser page and verify that the banner is there.  At this point, you should have something like this:
+![Bootstrap Banner](./images/bootstrap-banner.png)
 
 ## Step 4: Adding an Image
 
@@ -84,23 +86,25 @@ Except, of course, that you give it a family name and file name corresponding to
 ```
 font-family: 'Canterbury'; 
 ```
-Except that you need to use the name of the font-family you used.  Refresh your browser page to verify that the font shows.
+Except that you need to use the name of the font-family you used.  Refresh your browser page to verify that the font shows.  The screen may look something like this:
+![Bootstrap Banner With Font](./images/bootstrap-font.png)
+
 
 ## Step 6. Add a Navigation Bar
   
 This should be in your layout, within the main div, below the banner but above the yield statement.  You can copy the one from the W3schools Bootstrap tutorial, modifying it as you like.  The list entries in this bar should be dropdowns, and they should have the choices described in the spec, configured with links that work. You can copy the dropdown example from W3schools, except they make it a button element that is styled as a primary button.  I think that looks ugly.  A better styling is the one that Bootstrap supplies for the purpose: `class="btn dropdown-toggle"`.  Eefresh the page to verify that the navigation bar shows.  Verify also that each of the dropdown options works.  Note: Sometimes there is a problem that the dropdowns don’t work, because the required Popper JavaScript somehow didn’t get set up right.  If this is the issue, take a look at the page using your browser developer tools to see if you can tell why, and also check that you did all the parts of Step 1.  Contact a mentor if it still doesn’t work.
 
-At this point, you might have something like this:
+## Step 7. Styling Links, Buttons, and Tables
 
-## Step 7. Styling Links and Buttons
-
-Here you configure the links and buttons in the Customer index view to have the same appearance.  The classes you want are `"btn btn-primary"`.  You add this class to each of the link\_to and button\_to statements. Then check to see that it looks right.  Optionally, you can change the other buttons and links in the application to match.  You don’t want to set the style of all buttons and links in your application.scss, because then the links in the navigation bar will look ugly.  Also, change the wording on the buttons as you like.  
+Here you configure the links and buttons in the Customer index view to have the same appearance.  The classes you want are `"btn btn-primary"`.  You add this class to each of the link\_to and button\_to statements. Then check to see that it looks right.  Optionally, you can change the other buttons and links in the application to match.  You don’t want to set the style of all buttons and links in your application.scss, because then the links in the navigation bar will look ugly.  Also, change the wording on the buttons as you like.  Then use Bootstrap table classes to style the tables.  At this point, this might be the rough appearance:
+![Bootstrap Buttons and Tables](./images/bootstrap-butttons.png)
 
 **A tip here:** We do not want a button that says Destroy.  We are not trying to destroy a customer, only to delete a record.  Software developers have a bad habit of using the wrong words.  For example, a medical monitoring application, in the event of network problems, would put up a message that said “Client died”. Doctors found this to be alarming.
 
 ## Step 8.  Showing Orders as Cards in a Grid
 
-You want a responsive grid of cards for your Order index view.  The outer div should have the classes `"container-fluid  row"`.  Inside this you have a loop for each of the orders.  First you set up a responsive grid column, by creating a div with class `col-sm`.  This style causes the cards to stack if the screen window is too narrow. Then you create a card div for each order. You can and should play with the appearance, but an example styling for the card div might include the attributes `class="card border border-2 border-success p-1 mt-3" style="width: 18rem;"`.  This creates fixed width cards with borders.  The `border-success` class gives the borders a Bootstrap color, in this case the `$success` color.  The `p-1` class causes the cards to be separated with gutters.  The `mt-3` class puts a margin at the top of each card, which makes them look ok when they are stacked, if the window is not wide enough.  Now, inside this card, you want at least three divs.  The first one should have class `"card-header"`, and the second should have class `"card-body"`.  You can put appropriate stuff in each as you choose, but be sure that you include the order product name, the order product count, and the customer's full name.  Then, you need a dev with class `"card-footer"`, in which you put edit and delete buttons.  The edit and delete buttons should work.  You can play with the various options here to get an appearance you like.  Then, in your browser, select the Order List view.  Check that it looks ok.  Check that it is responsive: if you shrink your browser width, the cards stack.  Check that the buttons work.
+You want a responsive grid of cards for your Order index view.  The outer div should have the classes `"container-fluid  row"`.  Inside this you have a loop for each of the orders.  First you set up a responsive grid column, by creating a div with class `col-sm`.  This style causes the cards to stack if the screen window is too narrow. Then you create a card div for each order. You can and should play with the appearance, but an example styling for the card div might include the attributes `class="card border border-2 border-success p-1 mt-3" style="width: 18rem;"`.  This creates fixed width cards with borders.  The `border-success` class gives the borders a Bootstrap color, in this case the `$success` color.  The `p-1` class causes the cards to be separated with gutters.  The `mt-3` class puts a margin at the top of each card, which makes them look ok when they are stacked, if the window is not wide enough.  Now, inside this card, you want at least three divs.  The first one should have class `"card-header"`, and the second should have class `"card-body"`.  You can put appropriate stuff in each as you choose, but be sure that you include the order product name, the order product count, and the customer's full name.  Then, you need a dev with class `"card-footer"`, in which you put edit and delete buttons.  The edit and delete buttons should work.  You can play with the various options here to get an appearance you like.  Then, in your browser, select the Order List view.  Check that it looks ok.  Check that it is responsive: if you shrink your browser width, the cards stack.  Check that the buttons work.  Here is a sample appearance:
+![Bootstrap Card Grid](./images/bootstrap-cards.png)
 
 ## Step 9. Styling Alerts.
 
@@ -116,6 +120,8 @@ You want to change this so that if the `flash\[:notice\]` has a value, a Bootstr
 The alert divs should be added to the layout, above the navbar but below the banner.  You should remove the green notice paragraph lines in the other views.
 
 Then test to see that the alerts work, for example by trying /customers/999 or by creating a new order.  They should look something like this:
+
+![Bootstrap Alert](./images/bootstrap-alert.png)
 
 ## Step 10. Using a Modal Window
 
@@ -153,6 +159,33 @@ index view, the render statement is inside the loop that shows each customer.  T
 
 Here is what the code for the modal might look like:
 ```
+<div class="modal" id="<%= "myModal-#{customer.id}" %>">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Are you sure?</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+       <p>Are you sure you want to delete the customer and order records for <%= customer.full_name %>?
+           That customer has <%= customer.orders.count.to_s %> orders.  If there are any orders for this
+           customer, those orders will be deleted too! </p>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+      <%= button_to("Delete", "/customers/customerAndOrders/#{customer.id}", method: :delete, class: "btn btn-danger", 
+      data: { "bs-dismiss" => "modal" })  %>
+<button type="button", class="btn btn-primary" data-bs-dismiss="modal">Cancel</button>         
+      </div>
+
+    </div>
+  </div>
+</div>
 ```
 
 And this is the route:
@@ -162,9 +195,18 @@ delete "/customers/customerAndOrders/:id", to: "customers#destroy_with_orders"
 
 And this is the method to add to the controller ( you must also add it to the :set_customer list):
 ```
+  def destroy_with_orders
+    if (@customer.orders.exists?)
+      @customer.orders.destroy_all
+    end
+    @customer.destroy
+    flash.notice = "The customer record and all related order records were successfully deleted."
+    redirect_to customers_url
+  end
 ```
 
 The modal window would look like this:
+![Bootstrap Modal](./images/bootstrap-modal.png)
 
 
 Now, the hard way --but really only slightly harder.  This is for orders instead of customers.  We'll only have one modal rendered  for the whole page, but we'll pass data to it.  This example shows how you can pass data to a modal.
