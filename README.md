@@ -18,10 +18,13 @@ The specifications for the lesson are below.  There are instructions for each p
 10.  Review the instructions on how to change the “are you sure” message for delete operations into a Bootstrap modal window. Optionally, complete those instructions.
 11.   Optionally, make any other changes you like that might make the application attractive.
 
-Step 1: Install and configure Bootstrap
+## Step 1: Install and configure Bootstrap
 
-1.  Run `bin/bundle add bootstrap`
-2.  Rename `app/assets/stylesheets/application.css` to `application.scss`.  Then add the line `@import "bootstrap"`
+1.  Run: `bin/bundle add bootstrap`
+2.  Rename `app/assets/stylesheets/application.css` to `application.scss`.  Then add the line
+```
+@import "bootstrap"
+```
 3.  Edit `app/assets/javascript/application.cs` and add these lines:
 ```
 import "popper"
@@ -39,136 +42,185 @@ Rails.application.config.assets.precompile += %w( bootstrap.min.js popper.js)
 
 Then run the server, or restart it if it is already running.  Verify that the appearance of the application has changed.  Note – the precompile step does cause your application to start slowly.  You should see something like this:
 
-Step 2: Changing the background color
+## Step 2: Changing the Background Color
 
-Bootstrap documents variables that you can set within your CSS to affect the color.  At the moment we will just use one of these.  Add these lines to your app/assets/stylesheets/application.css: :root {
-
+The Bootstrap document includes descriptions of variables that you can set within your CSS to affect the color.  At the moment we will just use one of these.  Add these lines to your `app/assets/stylesheets/application.css`: 
+```
+:root {
    --bs-body-bg: #e7a3f0;
+}
+```
+This value is for light purple, but you can choose any light color you like. Also, change the `app/views/layouts/application.html.erb` file to add a div with class `"container-fluid"`.  The yield statement should be inside this div.  This makes your application responsive to window sizes.  Then refresh your browser to check that the color has changed.
 
- }
+## Step 3: Adding the Banner
 
-This value is for light purple, but you can choose any light color you like. Also,, change the app/views/layouts/application.html.erb file to add a div with class “container-fluid”.  The yield statement should be inside the div.  This makes your application responsive to window sizes.  Then refresh your browser to check that the color has changed.
+The banner is done as is described at the W3schools Bootstrap Jumbotron link.  The jumbotron is no longer a Bootstrap class, but you can do the equivalent.  You can use the example from W3schools, but use your own title and text.  Refresh your browser page and verify that the banner is there.  At this point, you should have something like this.
 
-Step 3: The banner is done as is described at the W3schools Bootstrap Jumbotron link.  The jumbotron is no longer a Bootstrap class, but you can do the equivalent.  You can use the example from W3schools, but use your own title and text.  Refresh your browser page and verify that the banner is there.
+## Step 4: Adding an Image
 
-Step 4: Find an image (jpg, gif, or png), and store it in app/assets/images.  Then, in your application.scss, create a class .banner-background as follows:
-
-  .banner-background {
-
-    background-image: url('s-l1600.jpg');
-
-    background-size: cover;
-
-  }
-
+Find an image (jpg, gif, or png), and store it in app/assets/images.  Then, in your application.scss, create a class .banner-background as follows:
+```
+.banner-background {
+  background-image: url('s-l1600.jpg');
+  background-size: cover;
+}
+```
 Then refresh the page and verify that the image shows in the banner.
 
-Step 5: Create the directory app/assets/fonts.  Find a font.  There are free ones on the net.  Store it in app/assets/fonts.  You will typically have to unpack it from a zip file.  You should delete the zip file, and you will typically be left with a tff file or something like that.  Then, edit config/application.rb, and within the class Application section, add the line config.assets.paths << Rails.root.join('app', 'assets', 'fonts').  Then restart the server, so that the fonts directory is added to the asset pipeline.  After that, you need to add the following lines to your application.scss:
+## Step 5: Adding a Font
 
+Create the directory `app/assets/fonts`.  Find a font.  There are free ones on the net.  Store it in `app/assets/fonts`.  You will typically have to unpack it from a zip file.  You should delete the zip file, and you will typically be left with a tff file or something like that.  Then, edit `config/application.rb`, and within the class Application section, add the line:
+```
+config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
+```
+Then restart the server, so that the fonts directory is added to the asset pipeline.  After that, you need to add the following lines to your application.scss:
+```
 @font-face {
+  font-family: 'Canterbury';
+  src: url('Canterbury.ttf');
+}
+```
+Except, of course, that you give it a family name and file name corresponding to the font you installed. This stanza should be added above the `.banner-background` style class.  Then change the `.banner-background` class to add the line:
+```
+font-family: 'Canterbury'; 
+```
+Except that you need to use the name of the font-family you used.  Refresh your browser page to verify that the font shows.
 
-    font-family: 'Canterbury';
+## Step 6. Add a Navigation Bar
+  
+This should be in your layout, within the main div, below the banner but above the yield statement.  You can copy the one from the W3schools Bootstrap tutorial, modifying it as you like.  The list entries in this bar should be dropdowns, and they should have the choices described in the spec, configured with links that work. You can copy the dropdown example from W3schools, except they make it a button element that is styled as a primary button.  I think that looks ugly.  A better styling is the one that Bootstrap supplies for the purpose: `class="btn dropdown-toggle"`.  Eefresh the page to verify that the navigation bar shows.  Verify also that each of the dropdown options works.  Note: Sometimes there is a problem that the dropdowns don’t work, because the required Popper JavaScript somehow didn’t get set up right.  If this is the issue, take a look at the page using your browser developer tools to see if you can tell why, and also check that you did all the parts of Step 1.  Contact a mentor if it still doesn’t work.
 
-    src: url('Canterbury.ttf');
+At this point, you might have something like this:
 
- }
+## Step 7. Styling Links and Buttons
 
-Except that you give it a family name and file name corresponding to the font you installed.  This stanza should be added above .banner-background style class.  Then change the .banner-background class to add the line font-family: 'Canterbury'; Except that you need to use the name of the font-family you used.  Refresh your browser page to verify that the font shows.
+Here you configure the links and buttons in the Customer index view to have the same appearance.  The classes you want are `"btn btn-primary"`.  You add this class to each of the link\_to and button\_to statements. Then check to see that it looks right.  Optionally, you can change the other buttons and links in the application to match.  You don’t want to set the style of all buttons and links in your application.scss, because then the links in the navigation bar will look ugly.  Also, change the wording on the buttons as you like.  
 
-Step 6. Add a navigation bar.  This should be in your layout, within the main div, below the banner but above the yield statement.  You can copy the one from the W3schools Bootstrap tutorial, modifying it as you like.  The list entries in this bar should be dropdowns, and they should have the choices described in the spec, configured with links that work.  You can copy the dropdown example from W3schools, except they make it a button element that is styled as a button.  I think that looks ugly.  You could instead make it a paragraph element and add the ms-3 class so that it is appropriately spaced.  Then refresh the page to verify that the navigation bar shows.  Verify also that each of the dropdown options works.  Note: Sometimes there is a problem that the dropdowns don’t work, because the required Popper JavaScript somehow didn’t get set up right.  If this is the issue, take a look at the page using your browser developer tools to see if you can tell why, and also check that you did all the parts of Step 1.  Contact a mentor if it still doesn’t work.
+**A tip here:** We do not want a button that says Destroy.  We are not trying to destroy a customer, only to delete a record.  Software developers have a bad habit of using the wrong words.  For example, a medical monitoring application, in the event of network problems, would put up a message that said “Client died”. Doctors found this to be alarming.
 
-Step 7. Here you configure the links and buttons in the Customer index view to have the same appearance.  The classes you want are “btn btn-primary”.  You change the link\_to and button\_to statements to add class: “btn btn-primary”.  Then check to see that it looks right.  Optionally, you can change the other buttons and links in the application to match.  You don’t want to set the style of all buttons and links in your application.scss, because then the links in the navigation bar will look ugly.  Also, change the wording on the buttons as you like.  
+## Step 8.  Showing Orders as Cards in a Grid
 
-A tip here: we do not want a button that says Destroy.  We are not trying to destroy a customer, only to delete a record.  Software developers have a bad habit of using the wrong words.  For example, a medical monitoring application, in the event of network problems, would put up a message that said “Client died”.  Doctors found this to be alarming.
+You want a responsive grid of cards for your Order index view.  The outer div should have the classes `"container-fluid  row"`.  Inside this you have a loop for each of the orders.  First you set up a responsive grid column, by creating a div with class `col-sm`.  This style causes the cards to stack if the screen window is too narrow. Then you create a card div for each order. You can and should play with the appearance, but an example styling for the card div might include the attributes `class="card border border-2 border-success p-1 mt-3" style="width: 18rem;"`.  This creates fixed width cards with borders.  The `border-success` class gives the borders a Bootstrap color, in this case the `$success` color.  The `p-1` class causes the cards to be separated with gutters.  The `mt-3` class puts a margin at the top of each card, which makes them look ok when they are stacked, if the window is not wide enough.  Now, inside this card, you want at least three divs.  The first one should have class `"card-header"`, and the second should have class `"card-body"`.  You can put appropriate stuff in each as you choose, but be sure that you include the order product name, the order product count, and the customer's full name.  Then, you need a dev with class `"card-footer"`, in which you put edit and delete buttons.  The edit and delete buttons should work.  You can play with the various options here to get an appearance you like.  Then, in your browser, select the Order List view.  Check that it looks ok.  Check that it is responsive: if you shrink your browser width, the cards stack.  Check that the buttons work.
 
-Step 8.  You want a responsive grid of cards for your Order index view.  The outer div should have the classes “container-fluid  row”.  Inside this you have a loop for each of the orders.  First you set up a responsive grid column, by creating a div with class “col-sm”.  This causes the cards to stack if the screen window is too narrow. Then you create a card for the order. That is a div with the attributes class="card border border-2 border-success p-1 mt-3" style="width: 18rem;".  This creates fixed width cards with borders.  The border-success class gives the borders a Bootstrap color, in this case the $success color.  The p-1 class causes the cards to be separated with gutters.  The mt-3 class puts a margin at the top of each card, which makes them look ok when they are stacked, if the window is not wide enough.  Now, inside this card, you want at least two divs.  The first one should have class “card-header”, and the second should have class “card-body”.  You can put appropriate stuff in each as you choose, but be sure that you include the order product name, the order product count, the order customer full name, and edit and delete buttons, and the edit and delete buttons should work.  You can play with the various options here to get an appearance you like.  Then, in your browser, select the Order List view.  Check that it looks ok.  Check that it is responsive if you shrink your browser width.  Check that the buttons work.
+## Step 9. Styling Alerts.
 
-Step 9.  In the previous lesson, you put a red alert paragraph in the layout to handle the error that occurs if the user attempts to get an order or customer that doesn’t exist, for example by going to /customers/999.  Change this so that if the flash\[:alert\] has a value, a Bootstrap danger alert is shown.  Also, Rails is automatically creating a flash\[:notice\] to display if an entry is created or updated.  Add code to the layout to display a Bootstrap success alert in this case.  The show views for Order and Customer have green paragraphs at the top that display the notice.  Take those out.  Then test to see that the alerts work, for example by trying /customers/999 or by creating a new order.
+In the previous lesson, you put a red alert paragraph in the layout.  The alert handles, for example, the error that occurs if the user attempts to get an order or customer that doesn’t exist, for example by going to `/customers/999`. Change this so that if the `flash\[:alert\]` has a value, a Bootstrap danger alert is shown.  Also, the controllers have statements like:
+```
+flash.notice = "The customer record was created successfully."
+```
+And the customer views have the line:
+```
+<p style="color: green"><%= notice %></p>
+```
+You want to change this so that if the `flash\[:notice\]` has a value, a Bootstrap success alert is shown.
+The alert divs should be added to the layout, above the navbar but below the banner.  You should remove the green notice paragraph lines in the other views.
 
-Step 11.  This is the optional step to use a modal window for the “Are you sure?” message.  You don’t have to do this, because it’s a little complicated, but be sure you understand how to do modal windows.  Here are the steps.
+Then test to see that the alerts work, for example by trying /customers/999 or by creating a new order.  They should look something like this:
 
-1.  Change the button for delete so that instead of triggering the “Are you sure?” prompt followed by a delete, it looks like this instead: <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" data-id=<%= order.id %> >  This is a little different from the example at W3Schools, in that we have to pass the order.id (or customer.id) to the modal.  It can also be useful (see below) to pass other data, such as the customer name, the product name, and the product count.
-2.  Next, create the modal form itself.  This should be a partial that you use wherever you intend to do a delete.  It should be an erb file.  You would create app/views/orders/\_deleteModal.html.erb, for example, and you would render it in the Orders index and show views.
-3.  You can do various things in the form.  For example, you could collect additional information from the user, maybe a password to make sure they are authorized to do a delete, or whatever you like.  But the form has to have a submit button for the operation to proceed, and another button that is not a submit button to dismiss the dialog.  In our case, these would be Delete and Cancel, and the Delete might have btn-danger.  The Delete button would have type “submit”, the Cancel button would have type “button”, and both would have an attribute data-bs-dismiss="modal" so that the modal gets dismissed.  There is also a third button in the header for the x that dismisses the modal.
-4.  A problem with the modal example at W3Schools is that the example does not have a form.  We are going to put a form in.  Actually it is our old delete button, which is a form that looks like a button.
-5.  Another problem is that the W3Schools example does not explain how to pass data to the modal.  We have to attach it to the button that opens the modal, and then we use JavaScript to retrieve it from the button.  Clearly this is necessary if the right customer or order record is to be deleted.
-6.  We can also give a nice message, more than just “Are you sure?”.  It might say, “Are you sure you want to delete the order from Frank Smith for 50 chairs?”  In order to do that, though, we have to attach more data to the button that triggers the modal.  For example, data-customer=”Frank Smith”, data-product-name =”chair”, and data-product-count=”50”.  Then, we use JavaScript to retrieve that data from the button and to display it in the modal.
-7.  So, here’s an example of such a modal:
+## Step 10. Using a Modal Window
 
+This is the optional step to use a modal window for the “Are you sure?” message.  A modal window is a pop-up.  It appears, somewhat rudely, in the middle of your browser screen.  You can't do any browser operations unless you first interact with and dismiss the modal window.  
+
+You don’t have to actually implement this, because it’s a little complicated, but be sure you understand how to do modal windows.  The W3Schools example is a little incomplete.  You put a form inside the modal, and the form should have a submit button.  If the submit button is pressed, the action specified by the form is executed: a get/post/put/patch/delete for the target URL.  There are several other buttons to dismiss the modal window without actions.  You can do anything you like in the form, such as possibly collecting additional information from the user.  You can also make it much more descriptive than a plain "Are you sure?".  Modals can be used for all sorts of reasons, not just for simple confirmations.
+
+We are going to use the modal to put up a more descriptive "Are you sure?" message, giving information about the order or customer to be deleted.  The form we are going to use is the same form we currently have embedded in the delete button.  Now, on the Customers view, there is a delete button for each customer.  When the modal window causes the delete to occur, we want to know which customer record to delete.  There are
+two ways to do this, the easy way and the hard way.
+
+The easy way is to render a different modal window for each customer.  When the delete button is clicked
+for a given customer, that button triggers the showing of the corresponding modal.  The rendering is done on the server side, and we can use all the power of embedded Ruby to customize it.
+
+The hard way is also shown below, because it illustrates a key idea.  Sometimes you need to pass data so that
+the modal knows what action to take.  So, you attach that data to the button that triggers the modal.  As you've seen already, you attach data to an element by giving it a "data-*" attribute.  In this way, we can attach to each button different values: the id of the record to be deleted, and other information, maybe the product name, the product count, and other stuff.  But, how do you get the data back out?  That requires JavaScript.  When the modal is shown, a `show.bs.modal` event is triggered for that window.  The event includes a value `e.relatedTarget`, which is the button that was clicked, and from that we can get the data attributes, and then we can update the text of the modal window and direct the actions to the right URL.
+
+**A Tip** Render your modals outside of any other elements within the view.  You don't want to declare
+them as you are doing the table, for example, because of some strange behavior.  For some reason, some
+of the time, the contents of the form within the modal may render outside of the form, so that the
+submit button does not work.  It's not clear why this happens, but this is the workaround.
+
+Here are the steps (first the easy way, as implemented for the customer view):
+
+1. Change the button for delete so that instead of triggering the "Are you sure?" prompt followed by a delete, it looks like this instead:
+
+    ```
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal-<%= customer.id%>">
+    ```
+
+    Note again, we have a different modal for each customer entry, and each has a different id.
+2. Create the modal form itself.  This should be a partial that you use wherever you intend to do a delete. It should be an erb file.  You would create `app/views/customers/\_deleteModal.html.erb`, for example, and you would render it in the Orders index and show views.
+3. Add render statements for these modal windows to the index and show views for the customer.  For the
+index view, the render statement is inside the loop that shows each customer.  The customer to be rendered is passed as a parameter on the render statement.
+4. We can do something additional here. Suppose the customer has orders.  We can add a new route that deletes all the orders for a given  customer and then deletes the customer itself.  We give the user fair warning that the customer has N orders and that all those records are about to be deleted when the customer record is.  We add a new route and a new method to the controller that actually does the deleting.
+
+Here is what the code for the modal might look like:
+```
+```
+
+And this is the route:
+```
+delete "/customers/customerAndOrders/:id", to: "customers#destroy_with_orders"
+```
+
+And this is the method to add to the controller ( you must also add it to the :set_customer list):
+```
+```
+
+The modal window would look like this:
+
+
+Now, the hard way --but really only slightly harder.  This is for orders instead of customers.  We'll only have one modal rendered  for the whole page, but we'll pass data to it.  This example shows how you can pass data to a modal.
+
+1. Change the button for delete so that instead of triggering the “Are you sure?” prompt followed by a delete, it looks like this instead:
+```
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" data-id="<%= order.id %>" data-customer="<%= order.customer.full_name %>" data-productname="<%= order.product_name %>" data-productcount="order.customer.product_count %>" >
+```
+2. Next, create the modal form itself with the attached JavaScript.  This should be a partial that you use wherever you intend to do a delete: `app/views/orders/\_deleteModal.html.erb`.
+3. Also, create the JavaScript to be added to the form.  This is the JavaScript that gets the data from the button to customize the form.  This is the only tricky part.  Of course, this is client side JavaScript.  You can't access the database from here, so you can only use the data that was attached to the button.  The data is used to modify the text in the modal, as well as the action on the form.
+4. Add render statements for this modal to the index and show views for orders.  Note that you do not need to pass the order as a parameter on the render statement, as you only have one modal to render.
+
+Here’s an example of such a modal, with attached JavaScript:
+```
 <div class\="modal" id\="myModal"\>
-
   <div class\="modal-dialog"\>
-
     <div class\="modal-content"\>
-
       <!-- Modal Header -->
-
       <div class\="modal-header"\>
-
         <h4 class\="modal-title"\>Are you sure?</h4\>
-
         <button type\="button" class\="btn-close" data-bs-dismiss\="modal"\></button\>
-
       </div\>
-
       <!-- Modal body -->
-
       <div class\="modal-body"\>
-
-       <p\>Are you sure you want to delete the order from <span id\="customerName"\></span\>
-
-        for <span id\="productCount"\></span\>
-
-        of our <span id\="productName"\></span\> product?</p\>
-
+        <p\>Are you sure you want to delete the order from <span id\="customerName"\></span\>
+            for <span id\="productCount"\></span\>
+            of our <span id\="productName"\></span\> product?
+        </p\>
       </div\>
-
       <!-- Modal footer -->
-
       <div class\="modal-footer"\>
-
-      <%= button\_to("Delete", nil, method: :delete, class: "btn btn-danger",
-
-      data: { "bs-dismiss" => "modal" }, form: {id: "doDelete"})  %>
-
-<button type\="button", class\="btn btn-primary" data-bs-dismiss\="modal"\>Cancel</button\>       
-
+        <%= button\_to("Delete", nil, method: :delete, class: "btn btn-danger",
+          data: { "bs-dismiss" => "modal" }, form: {id: "doDelete"})  %>
+        <button type\="button", class\="btn btn-primary" data-bs-dismiss\="modal"\>Cancel
+        </button\>       
       </div\>
-
     </div\>
-
   </div\>
-
 </div\>
-
 <script\>
-
 document.addEventListener("DOMContentLoaded", () \=> {
-
-const myModal = document.getElementById("myModal")
-
-myModal.addEventListener("show.bs.modal", (e) \=> {
-
-const triggerButton = e.relatedTarget
-
-const customerName = document.getElementById("customerName")
-
-const productName = document.getElementById("productName")
-
-const productCount = document.getElementById("productCount");
-
-const doDelete = document.getElementById("doDelete")
-
-customerName.textContent = triggerButton.getAttribute("data-customer")
-
-productName.textContent = triggerButton.getAttribute("data-productname")
-
-productCount.textContent = triggerButton.getAttribute("data-productcount")
-
-doDelete.action = ("/orders/" + triggerButton.getAttribute("data-id"))
-
+  const myModal = document.getElementById("myModal")
+  myModal.addEventListener("show.bs.modal", (e) \=> {
+    const triggerButton = e.relatedTarget
+    const customerName = document.getElementById("customerName")
+    const productName = document.getElementById("productName")
+    const productCount = document.getElementById("productCount");
+    const doDelete = document.getElementById("doDelete")
+    customerName.textContent = triggerButton.getAttribute("data-customer")
+    productName.textContent = triggerButton.getAttribute("data-productname")  
+    productCount.textContent = triggerButton.getAttribute("data-productcount")
+    doDelete.action = ("/orders/" + triggerButton.getAttribute("data-id"))
+  })
 })
-
-})
-
 </script\>
+```
+## Step 11: Get Creative
+
+You can make the application look as nice as you have time for.  You'll get another chance to do this in your final project.
