@@ -1,6 +1,8 @@
 # Specifications for the Bootstrap Lesson
 
-To create attractive web applications, it is necessary to apply styling. You have taken a previous course on HTML and CSS.  Bootstrap is a commonly used library of CSS styles that ease the creation of attractive applications.  In this lesson, you will use Bootstrap classes to style the application you have created. This lesson builds on the previous ones. You will use the same github repository, R7-validations, but for this lesson, you should create a new branch called bootstrap. Make sure that the full-assignment branch is active when you create the bootstrap branch, so that your work adds to what you did before.
+To create attractive web applications, it is necessary to apply styling. You have taken a previous course on HTML and CSS.  Bootstrap is a commonly used library of CSS styles that ease the creation of attractive applications.  Optionally, you may want to view [this video.](https://teamtreehouse.com/library/bootstrap-4-basics-2)
+
+In this lesson, you will use Bootstrap classes to style the application you have created. This lesson builds on the previous ones. You will use the same github repository, R7-validations, but for this lesson, you should create a new branch called bootstrap. Make sure that the full-assignment branch is active when you create the bootstrap branch, so that your work adds to what you did before.
 
 The specifications for the lesson are below.  There are instructions for each part of the specification.  In addition, please review this site: [https://www.w3schools.com/bootstrap5/](https://www.google.com/url?q=https://www.w3schools.com/bootstrap5/&sa=D&source=editors&ust=1697683383982154&usg=AOvVaw1UlAU7u8TcRbo-WQUPtTgQ) .  It gives a tutorial on the use of Bootstrap.  Also, refer to this site: [https://getbootstrap.com/](https://www.google.com/url?q=https://getbootstrap.com/&sa=D&source=editors&ust=1697683383982593&usg=AOvVaw2wrGMB1cWsq0VuHTpUkVMZ) .  It includes complete documentation on the use of Bootstrap.
 
@@ -117,8 +119,7 @@ And the customer views have the line:
 ```
 <p style="color: green"><%= notice %></p>
 ```
-You want to change this so that if the `flash\[:notice\]` has a value, a Bootstrap success alert is shown.
-The alert divs should be added to the layout, above the navbar but below the banner.  You should remove the green notice paragraph lines in the other views.
+You want to change this so that if the `flash\[:notice\]` has a value, a Bootstrap success alert is shown. The alert divs should be added to the layout, above the navbar but below the banner.  You should remove the green notice paragraph lines in the other views.
 
 Then test to see that the alerts work, for example by trying /customers/999 or by creating a new order.  They should look something like this:
 
@@ -144,19 +145,13 @@ This is the optional step to use a modal window for the “Are you sure?” mess
 
 You don’t have to actually implement this, because it’s a little complicated, but be sure you understand how to do modal windows.  The W3Schools example is a little incomplete.  You put a form inside the modal, and the form should have a submit button.  If the submit button is pressed, the action specified by the form is executed: a get/post/put/patch/delete for the target URL.  There are several other buttons to dismiss the modal window without actions.  You can do anything you like in the form, such as possibly collecting additional information from the user.  You can also make it much more descriptive than a plain "Are you sure?".  Modals can be used for all sorts of reasons, not just for simple confirmations.
 
-We are going to use the modal to put up a more descriptive "Are you sure?" message, giving information about the order or customer to be deleted.  The form we are going to use is the same form we currently have embedded in the delete button.  Now, on the Customers view, there is a delete button for each customer.  When the modal window causes the delete to occur, we want to know which customer record to delete.  There are
-two ways to do this, the easy way and the hard way.
+We are going to use the modal to put up a more descriptive "Are you sure?" message, giving information about the order or customer to be deleted.  The form we are going to use is the same form we currently have embedded in the delete button.  Now, on the Customers view, there is a delete button for each customer.  When the modal window causes the delete to occur, we want to know which customer record to delete.  There are two ways to do this, the easy way and the hard way.
 
-The easy way is to render a different modal window for each customer.  When the delete button is clicked
-for a given customer, that button triggers the showing of the corresponding modal.  The rendering is done on the server side, and we can use all the power of embedded Ruby to customize it.
+The easy way is to render a different modal window for each customer.  When the delete button is clicked for a given customer, that button triggers the showing of the corresponding modal.  The rendering is done on the server side, and we can use all the power of embedded Ruby to customize it.
 
-The hard way is also shown below, because it illustrates a key idea.  Sometimes you need to pass data so that
-the modal knows what action to take.  So, you attach that data to the button that triggers the modal.  As you've seen already, you attach data to an element by giving it a "data-*" attribute.  In this way, we can attach to each button different values: the id of the record to be deleted, and other information, maybe the product name, the product count, and other stuff.  But, how do you get the data back out?  That requires JavaScript.  When the modal is shown, a `show.bs.modal` event is triggered for that window.  The event includes a value `e.relatedTarget`, which is the button that was clicked, and from that we can get the data attributes, and then we can update the text of the modal window and direct the actions to the right URL.
+The hard way is also shown below, because it illustrates a key idea.  Sometimes you need to pass data so that the modal knows what action to take.  So, you attach that data to the button that triggers the modal.  As you've seen already, you attach data to an element by giving it a "data-*" attribute.  In this way, we can attach to each button different values: the id of the record to be deleted, and other information, maybe the product name, the product count, and other stuff.  But, how do you get the data back out?  That requires JavaScript.  When the modal is shown, a `show.bs.modal` event is triggered for that window.  The event includes a value `e.relatedTarget`, which is the button that was clicked, and from that we can get the data attributes, and then we can update the text of the modal window and direct the actions to the right URL.
 
-**A Tip** Render your modals outside of any other elements within the view.  You don't want to declare
-them as you are doing the table, for example, because of some strange behavior.  For some reason, some
-of the time, the contents of the form within the modal may render outside of the form, so that the
-submit button does not work.  It's not clear why this happens, but this is the workaround.
+**A Tip:** Render your modals outside of any other elements within the view.  You don't want to declare them as you are doing the table, for example, because of some strange behavior.  For some reason, some of the time, the contents of the form within the modal may render outside of the form, so that the submit button does not work.  It's not clear why this happens, but this is the workaround.
 
 Here are the steps (first the easy way, as implemented for the customer view):
 
@@ -168,8 +163,7 @@ Here are the steps (first the easy way, as implemented for the customer view):
 
     Note again, we have a different modal for each customer entry, and each has a different id.
 2. Create the modal form itself.  This should be a partial that you use wherever you intend to do a delete. It should be an erb file.  You would create `app/views/customers/\_deleteModal.html.erb`, for example, and you would render it in the Orders index and show views.
-3. Add render statements for these modal windows to the index and show views for the customer.  For the
-index view, the render statement is inside the loop that shows each customer.  The customer to be rendered is passed as a parameter on the render statement.
+3. Add render statements for these modal windows to the index and show views for the customer.  For the index view, the render statement is inside the loop that shows each customer.  The customer to be rendered is passed as a parameter on the render statement.
 4. We can do something additional here. Suppose the customer has orders.  We can add a new route that deletes all the orders for a given  customer and then deletes the customer itself.  We give the user fair warning that the customer has N orders and that all those records are about to be deleted when the customer record is.  We add a new route and a new method to the controller that actually does the deleting.
 
 Here is what the code for the modal might look like:
