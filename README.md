@@ -15,8 +15,9 @@ The specifications for the lesson are below.  There are instructions for each p
 7.  Add Bootstrap classes to the links and buttons within the Customers index view, so that all appear as buttons.  Optionally, change all the other links and buttons within the application to have the same style.  Also, style the tables using a Bootstrap class.
 8.  Change the Orders index view.  Each Order should appear as a card within a grid.  The grid should be responsive, in that if the browser window is made too narrow, the cards should stack.  Each card should have as a title the product name and content that includes the customer name, the product count, and edit and delete buttons.  Each card should have a border, and there should be margins to each side and above the card, and of course the edit and delete buttons should work.
 9.  Add Bootstrap alert divs to the layout.  If these are shown, they should appear below the banner and above the navigation bar.  There should be a danger one for a flash alert (if it is present) and a success one for a flash notice (if it is present.)
-10.  Review the instructions on how to change the “are you sure” message for delete operations into a Bootstrap modal window. Optionally, complete those instructions.
-11.   Optionally, make any other changes you like that might make the application attractive.
+10. Add one or more Font Awesome glyphs.
+11.  Review the instructions on how to change the “are you sure” message for delete operations into a Bootstrap modal window. Optionally, complete those instructions.
+12.   Optionally, make any other changes you like that might make the application attractive.
 
 ## Step 1: Install and configure Bootstrap
 
@@ -123,7 +124,21 @@ Then test to see that the alerts work, for example by trying /customers/999 or b
 
 ![Bootstrap Alert](./images/bootstrap-alert.png)
 
-## Step 10. Using a Modal Window
+## Step 10. Adding Font Awesome Glyphs
+
+Glyphs are small icons that can illustrate a web page. or example, the little magnifying glass often used for search is typically aglyph, as are emoticons. The most commonly used glyphs come from Font Awesome. F To install Font Awesome, do the following:
+```
+bin/bundle add "font-awesome-sass"
+```
+Then add the following line to application.scss:
+```
+@import "font-awesome";
+```
+Now add glyphs somewhere on one of the pages.  For example, you could add a leading column to the customer index view, with a glyph for a person.  Just use the free glyphs, listed [here.](https://fontawesome.com/search?o=r&m=free)  You use the i helper function, like:
+```
+<%= icon('fa-regular', 'bell')%>
+```
+## Step 11. Using a Modal Window
 
 This is the optional step to use a modal window for the “Are you sure?” message.  A modal window is a pop-up.  It appears, somewhat rudely, in the middle of your browser screen.  You can't do any browser operations unless you first interact with and dismiss the modal window.  
 
@@ -263,6 +278,6 @@ document.addEventListener("DOMContentLoaded", () \=> {
 })
 </script\>
 ```
-## Step 11: Get Creative
+## Step 12: Get Creative
 
 You can make the application look as nice as you have time for.  You'll get another chance to do this in your final project.
